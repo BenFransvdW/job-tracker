@@ -1,10 +1,10 @@
-import { Application_Status, Priority_Colors, Status_Colors } from "./types";
+import { ApplicationStatus } from "./types";
 
 export const APPLICATION_STATUSES = ['wishlist', 'applied', 'interviewing', 'offer', 'rejected', 'ghosted'] as const;
 export const INTERVIEW_TYPES = ['phone', 'video', 'onsite', 'take-home', 'panel'] as const;
 export const PRIORITY_LEVEL = ['low', 'medium', 'high'] as const;
 
-export const STATUS_LABELS: Record<Application_Status, string> = {
+export const STATUS_LABELS: Record<typeof APPLICATION_STATUSES[number], string> = {
     wishlist : 'Wishlist',
     applied : 'Applied',
     interviewing : 'Interviewing',
@@ -14,7 +14,7 @@ export const STATUS_LABELS: Record<Application_Status, string> = {
 } as const;
 
 
-export const STATUS_COLORS: Record<Status_Colors, string> = {
+export const STATUS_COLORS: Record<ApplicationStatus, string> = {
     wishlist : 'blue',
     applied : 'green',
     interviewing : 'amber',
@@ -23,7 +23,7 @@ export const STATUS_COLORS: Record<Status_Colors, string> = {
     ghosted : 'gray'
 } as const;
 
-export const PRIORITY_COLORS:Record<Priority_Colors, string> = {
+export const PRIORITY_COLORS: Record<typeof PRIORITY_LEVEL[number], string> = {
     low : 'gray',
     medium : 'amber',
     high : 'red'

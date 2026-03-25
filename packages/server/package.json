@@ -8,6 +8,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@job-tracker/shared": "^1.0.0"
+  },
   "type": "commonjs",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
