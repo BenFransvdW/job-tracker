@@ -1,4 +1,4 @@
-import { ApplicationStatus } from "./types";
+import type { ApplicationStatus } from "./types";
 
 export const APPLICATION_STATUSES = ['wishlist', 'applied', 'interviewing', 'offer', 'rejected', 'ghosted'] as const;
 export const INTERVIEW_TYPES = ['phone', 'video', 'onsite', 'take-home', 'panel'] as const;
