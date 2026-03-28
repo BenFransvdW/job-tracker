@@ -22,7 +22,7 @@ const contactSchema = new Schema({
     notes: String
 }, { _id: false });
 
-const applicationSchema = new Schema<ApplicationDocument>({
+const applicationSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     company: { type: String, required: true },
     role: { type: String, required: true },

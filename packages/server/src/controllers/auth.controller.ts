@@ -160,7 +160,7 @@ export async function updateMe(req: Request, res: Response, next: NextFunction) 
         }
         if (name !== undefined) user.name = name;
         if (preferences) {
-            user.preferences = { ...user.preferences.toObject?.() ?? user.preferences, ...preferences };
+            user.preferences = { ...user.preferences, ...preferences };
         }
         await user.save();
         res.json({ user: { _id: user._id, email: user.email, name: user.name, preferences: user.preferences, createdAt: user.createdAt, updatedAt: user.updatedAt } });
