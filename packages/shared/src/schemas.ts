@@ -73,4 +73,12 @@ export const updateMeSchema = z.object({
         reminderDaysBefore: z.number().int().min(1).optional(),
     }).optional()
 })
+.refine(
+    (data) => {
+        const hasNew = !!data.newPassword;
+        const hasCurrent = !!data.currentPassword;
+        return hasNew === hasCurrent;
+    },
+    { message: 'Both currentPassword and newPassword must be provided together', path: ['newPassword'] }
+)
 export type UpdateMeInput = z.infer<typeof updateMeSchema>
