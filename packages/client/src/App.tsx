@@ -9,16 +9,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { BoardPage } from './pages/BoardPage';
 import { ListPage } from './pages/ListPage';
 import { ApplicationDetailPage } from './pages/ApplicationDetailPage';
-
-// Placeholder until Phase 7 pages are implemented
-function PlaceholderPage({ name }: { name: string }) {
-    return (
-        <div className="p-8">
-            <h1 className="text-2xl font-bold">{name}</h1>
-            <p className="text-gray-500 mt-2">Coming soon...</p>
-        </div>
-    );
-}
+import { DashboardPage } from './pages/DashboardPage';
 
 function ApiClientInitializer({ children }: { children: React.ReactNode }) {
     const { setAccessToken, getAccessToken } = useAuthContext();
@@ -64,7 +55,7 @@ export default function App() {
                     <Route element={<RequireAuth />}>
                         <Route path="/board" element={<BoardPage />} />
                         <Route path="/list" element={<ListPage />} />
-                        <Route path="/dashboard" element={<PlaceholderPage name="Dashboard" />} />
+                        <Route path="/dashboard" element={<DashboardPage />} />
                         <Route path="/applications/:id" element={<ApplicationDetailPage />} />
                     </Route>
                     <Route path="*" element={<Navigate to="/board" replace />} />
