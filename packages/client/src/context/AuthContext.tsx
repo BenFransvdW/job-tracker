@@ -8,6 +8,7 @@ interface AuthContextValue {
     setAccessToken: (token: string | null) => void;
     setUser: (user: User | null) => void;
     isLoading: boolean;
+    getAccessToken: () => string | null;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -51,7 +52,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             accessToken: accessTokenRef.current,
             setAccessToken,
             setUser,
-            isLoading
+            isLoading,
+            getAccessToken: () => accessTokenRef.current,
         }}>
             {children}
         </AuthContext.Provider>

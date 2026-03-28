@@ -1,12 +1,13 @@
 import { useCallback } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import { apiPost } from '../api/client';
+import type { User } from '@job-tracker/shared';
 
 export function useAuth() {
     const { user, accessToken, setAccessToken, setUser, isLoading } = useAuthContext();
 
     const login = useCallback(async (email: string, password: string) => {
-        const data = await apiPost<{ accessToken: string; user: any }>('/api/auth/login', { email, password });
+        const data = await apiPost<{ accessToken: string; user: User }>('/api/auth/login', { email, password });
         setAccessToken(data.accessToken);
         setUser(data.user);
         return data;

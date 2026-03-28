@@ -50,7 +50,7 @@ export function useUpdateStatus(id: string) {
             });
             return { snapshot };
         },
-        onError: (_err, _vars, ctx: any) => {
+        onError: (_err, _vars, ctx) => {
             if (ctx?.snapshot) qc.setQueryData(QUERY_KEYS.applications, ctx.snapshot);
         },
         onSettled: () => qc.invalidateQueries({ queryKey: QUERY_KEYS.applications }),

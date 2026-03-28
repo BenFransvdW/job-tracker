@@ -18,12 +18,10 @@ function PlaceholderPage({ name }: { name: string }) {
 }
 
 function ApiClientInitializer({ children }: { children: React.ReactNode }) {
-    const { accessToken, setAccessToken } = useAuthContext();
+    const { setAccessToken, getAccessToken } = useAuthContext();
     const { logout } = useAuth();
 
     useEffect(() => {
-        const getToken = () => accessToken;
-
         const refresh = async (): Promise<string | null> => {
             try {
                 const data = await apiPost<{ accessToken: string }>('/api/auth/refresh');
@@ -34,8 +32,8 @@ function ApiClientInitializer({ children }: { children: React.ReactNode }) {
             }
         };
 
-        initApiClient(getToken, refresh, logout);
-    }, [accessToken, setAccessToken, logout]);
+        initApiClient(getAccessToken, refresh, logout);
+    }, [getAccessToken, setAccessToken, logout]);
 
     return <>{children}</>;
 }
