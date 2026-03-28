@@ -1,6 +1,7 @@
 {
   "version": 2,
   "installCommand": "cd ../.. && npm install",
+  "buildCommand": "cd ../.. && npm run build -w packages/shared",
   "builds": [
     { "src": "api/index.ts", "use": "@vercel/node" }
   ],
