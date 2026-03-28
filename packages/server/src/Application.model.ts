@@ -1,14 +1,16 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Document, Model, Types } from "mongoose";
 import { Application } from "@job-tracker/shared";
 import { APPLICATION_STATUSES, PRIORITY_LEVEL } from "@job-tracker/shared";
 
-type ApplicationDocument = Application & Document;
+type ApplicationDocument = Omit<Application, 'interviews'> & {
+    interviews: Types.ObjectId[];
+} & Document;
 type ApplicationModel = Model<ApplicationDocument>;
 
 const salaryRangeSchema = new Schema({
     min: { type: Number, min: 0 },
     max: { type: Number, min: 0 },
-    currency: { type: String, length: 3 },
+    currency: { type: String, minlength: 3, maxlength: 3 },
     period: { type: String, enum: ['annual', 'monthly', 'hourly'] }
 }, { _id: false });
 
@@ -46,7 +48,7 @@ applicationSchema.index({ company: 'text', role: 'text' });
 
 // Pre-find hook: filter out soft-deleted documents
 applicationSchema.pre(['find', 'findOne'], function() {
-    this.where({ deletedAt: null });
+    this.where({ deletedAt: { $exists: false } });
 });
 
 export const ApplicationModel = mongoose.model<ApplicationDocument, ApplicationModel>(

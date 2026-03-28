@@ -70,7 +70,8 @@ export interface Application {
     contacts : Contact[],
     interviews : string[],
     createdAt : string,
-    updatedAt : string
+    updatedAt : string,
+    deletedAt? : string
 }
 
 export interface TokenPair {
