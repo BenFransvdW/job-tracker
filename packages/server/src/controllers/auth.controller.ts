@@ -110,17 +110,20 @@ export async function logout(req: Request, res: Response, next: NextFunction) {
     try {
         const token = req.cookies?.refreshToken;
         if (token) {
-            const payload = jwt.decode(token) as { userId?: string } | null;
-            if (payload?.userId) {
-                const user = await UserModel.findById(payload.userId);
-                if (user) {
-                    // Remove the matching token
-                    const results = await Promise.all(
-                        user.refreshTokens.map(t => bcrypt.compare(token, t))
-                    );
-                    user.refreshTokens = user.refreshTokens.filter((_, i) => !results[i]);
-                    await user.save();
+            try {
+                const payload = jwt.verify(token, config.jwtRefreshSecret) as { userId?: string };
+                if (payload?.userId) {
+                    const user = await UserModel.findById(payload.userId);
+                    if (user) {
+                        const results = await Promise.all(
+                            user.refreshTokens.map(t => bcrypt.compare(token, t))
+                        );
+                        user.refreshTokens = user.refreshTokens.filter((_, i) => !results[i]);
+                        await user.save();
+                    }
                 }
+            } catch {
+                // Invalid token — still clear the cookie below
             }
         }
         res.clearCookie('refreshToken');
