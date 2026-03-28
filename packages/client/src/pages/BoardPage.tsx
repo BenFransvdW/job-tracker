@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { DndContext, PointerSensor, useSensor, useSensors, closestCorners } from '@dnd-kit/core';
 import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 import type { Application, ApplicationStatus } from '@job-tracker/shared';
@@ -14,35 +14,45 @@ import { reorderApplications } from '../api/applications';
 export function BoardPage() {
     const { data, isLoading } = useApplications();
     const queryClient = useQueryClient();
+    const activeAppRef = useRef<Application | null>(null);
     const [activeApp, setActiveApp] = useState<Application | null>(null);
     const [addOpen, setAddOpen] = useState(false);
     const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
     const applications = data?.data ?? [];
 
-    const byStatus = APPLICATION_STATUSES.reduce((acc, s) => {
-        acc[s] = applications.filter(a => a.status === s).sort((a, b) => a.boardPosition - b.boardPosition);
-        return acc;
-    }, {} as Record<ApplicationStatus, Application[]>);
+    const byStatus = useMemo(() =>
+        APPLICATION_STATUSES.reduce((acc, s) => {
+            acc[s] = applications.filter(a => a.status === s).sort((a, b) => a.boardPosition - b.boardPosition);
+            return acc;
+        }, {} as Record<ApplicationStatus, Application[]>)
+    , [applications]);
 
     function handleDragStart(e: DragStartEvent) {
         const app = applications.find(a => a._id === e.active.id);
+        activeAppRef.current = app ?? null;
         setActiveApp(app ?? null);
     }
 
     async function handleDragEnd(e: DragEndEvent) {
+        const dragged = activeAppRef.current;
+        activeAppRef.current = null;
         setActiveApp(null);
         const { over } = e;
-        if (!over || !activeApp) return;
+        if (!over || !dragged) return;
 
-        const newStatus = (over.id as string) in byStatus ? over.id as ApplicationStatus : activeApp.status;
+        const overIsColumn = (over.id as string) in byStatus;
+        const overCard = applications.find(a => a._id === over.id);
+        const newStatus = overIsColumn
+            ? over.id as ApplicationStatus
+            : (overCard?.status ?? dragged.status);
 
-        if (newStatus !== activeApp.status) {
+        if (newStatus !== dragged.status) {
             queryClient.setQueryData([...QUERY_KEYS.applications], (old: any) => {
                 if (!old?.data) return old;
-                return { ...old, data: old.data.map((a: Application) => a._id === activeApp._id ? { ...a, status: newStatus } : a) };
+                return { ...old, data: old.data.map((a: Application) => a._id === dragged._id ? { ...a, status: newStatus } : a) };
             });
             try {
-                await reorderApplications(activeApp._id, [activeApp._id], newStatus);
+                await reorderApplications(dragged._id, [dragged._id], newStatus);
             } catch {
                 queryClient.invalidateQueries({ queryKey: QUERY_KEYS.applications });
             }

@@ -124,7 +124,7 @@ export function ApplicationDetailPage() {
                         <p className="text-gray-500 text-sm">No contacts added yet.</p>
                     ) : (
                         app.contacts.map((c, i) => (
-                            <div key={i} className="bg-white border rounded-lg p-4">
+                            <div key={`${c.name}-${i}`} className="bg-white border rounded-lg p-4">
                                 <p className="font-medium text-sm">{c.name}</p>
                                 {c.role && <p className="text-sm text-gray-500">{c.role}</p>}
                                 {c.email && <p className="text-sm text-blue-600">{c.email}</p>}

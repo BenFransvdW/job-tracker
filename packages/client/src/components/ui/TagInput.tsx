@@ -39,7 +39,7 @@ export function TagInput({ value, onChange, suggestions = [], placeholder = 'Add
             {value.map(tag => (
                 <span key={tag} className="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-xs">
                     {tag}
-                    <button type="button" onClick={() => removeTag(tag)} className="hover:text-blue-600">&times;</button>
+                    <button type="button" onClick={() => removeTag(tag)} aria-label={`Remove tag ${tag}`} className="hover:text-blue-600">&times;</button>
                 </span>
             ))}
             <div className="relative flex-1">
