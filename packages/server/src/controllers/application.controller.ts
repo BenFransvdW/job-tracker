@@ -62,7 +62,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     try {
         const userId = getUserId(req);
         const application = await ApplicationModel.findOneAndUpdate(
-            { _id: req.params.id, userId },
+            { _id: req.params.id, userId, deletedAt: { $exists: false } },
             { $set: req.body },
             { new: true, runValidators: true }
         );
@@ -80,7 +80,7 @@ export async function updateStatus(req: Request, res: Response, next: NextFuncti
         const update: Record<string, unknown> = { status };
         if (status === 'applied') update.appliedAt = new Date();
         const application = await ApplicationModel.findOneAndUpdate(
-            { _id: req.params.id, userId },
+            { _id: req.params.id, userId, deletedAt: { $exists: false } },
             { $set: update },
             { new: true }
         );
@@ -112,7 +112,7 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
     try {
         const userId = getUserId(req);
         const application = await ApplicationModel.findOneAndUpdate(
-            { _id: req.params.id, userId },
+            { _id: req.params.id, userId, deletedAt: { $exists: false } },
             { $set: { deletedAt: new Date() } },
             { new: true }
         );

@@ -8,7 +8,9 @@ const cache = new Map<string, { data: unknown; expiresAt: number }>();
 
 function getCached<T>(key: string): T | null {
     const entry = cache.get(key);
-    if (entry && entry.expiresAt > Date.now()) return entry.data as T;
+    if (!entry) return null;
+    if (entry.expiresAt > Date.now()) return entry.data as T;
+    cache.delete(key); // evict stale entry
     return null;
 }
 
