@@ -7,9 +7,9 @@ import config from './config';
 import { errorHandler } from './errorHandler';
 
 import { authRouter } from './routes/auth.routes';
-// import { applicationRouter } from './routes/application.routes';
-// import { interviewRouter } from './routes/interview.routes';
-// import { statsRouter } from './routes/stats.routes';
+import { applicationRouter } from './routes/application.routes';
+import { interviewRouter } from './routes/interview.routes';
+import { statsRouter } from './routes/stats.routes';
 
 const app = express();
 
@@ -21,8 +21,9 @@ app.use(cookieParser());
 
 // Routes
 app.use('/api/auth', authRouter);
-// app.use('/api/applications', applicationRouter);
-// app.use('/api/stats', statsRouter);
+app.use('/api/applications', applicationRouter);
+app.use('/api/applications/:appId/interviews', interviewRouter);
+app.use('/api/stats', statsRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {
