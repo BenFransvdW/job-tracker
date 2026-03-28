@@ -216,6 +216,9 @@ yarn-error.log*
 # docs
 *.docx
 
+# git worktrees
+.worktrees/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
