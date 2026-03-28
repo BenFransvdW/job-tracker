@@ -6,8 +6,7 @@ import mongoose from 'mongoose';
 import config from './config';
 import { errorHandler } from './errorHandler';
 
-// Import routers (will be created in Phase 3 & 4)
-// import { authRouter } from './routes/auth.routes';
+import { authRouter } from './routes/auth.routes';
 // import { applicationRouter } from './routes/application.routes';
 // import { interviewRouter } from './routes/interview.routes';
 // import { statsRouter } from './routes/stats.routes';
@@ -20,8 +19,8 @@ app.use(cors({ origin: config.corsOrigin, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// Routes (uncomment as phases are implemented)
-// app.use('/api/auth', authRouter);
+// Routes
+app.use('/api/auth', authRouter);
 // app.use('/api/applications', applicationRouter);
 // app.use('/api/stats', statsRouter);
 

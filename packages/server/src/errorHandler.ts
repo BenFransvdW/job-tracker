@@ -42,6 +42,18 @@ export const errorHandler = (
             message : "Invalid or expired token",
         };
     }
+    // Handle custom error objects (from middleware like authenticate)
+    else if (typeof err === 'object' && err !== null && 'error' in err) {
+        const customErr = err as { error: string; message: string; details?: unknown };
+        if (customErr.error === 'AuthenticationError' || customErr.error === 'ZodValidationError') {
+            status = customErr.error === 'AuthenticationError' ? 401 : 400;
+        }
+        apiError = {
+            error: customErr.error,
+            message: customErr.message,
+            details: (customErr as any).details
+        };
+    }
     // Generic JS Error
     else if (err instanceof Error) {
         apiError = {
