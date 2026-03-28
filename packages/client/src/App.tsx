@@ -6,8 +6,11 @@ import { initApiClient } from './api/client';
 import { apiPost } from './api/client';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { BoardPage } from './pages/BoardPage';
+import { ListPage } from './pages/ListPage';
+import { ApplicationDetailPage } from './pages/ApplicationDetailPage';
 
-// Placeholder until Phase 6 & 7 pages are implemented
+// Placeholder until Phase 7 pages are implemented
 function PlaceholderPage({ name }: { name: string }) {
     return (
         <div className="p-8">
@@ -59,10 +62,10 @@ export default function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route element={<RequireAuth />}>
-                        <Route path="/board" element={<PlaceholderPage name="Board" />} />
-                        <Route path="/list" element={<PlaceholderPage name="List" />} />
+                        <Route path="/board" element={<BoardPage />} />
+                        <Route path="/list" element={<ListPage />} />
                         <Route path="/dashboard" element={<PlaceholderPage name="Dashboard" />} />
-                        <Route path="/applications/:id" element={<PlaceholderPage name="Application Detail" />} />
+                        <Route path="/applications/:id" element={<ApplicationDetailPage />} />
                     </Route>
                     <Route path="*" element={<Navigate to="/board" replace />} />
                 </Routes>
