@@ -2,11 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src",
-    "paths": {
-      "@job-tracker/shared": ["../shared/src/index.ts"],
-      "@job-tracker/shared/*": ["../shared/src/*"]
-    }
+    "rootDir": "src"
   },
-  "include": ["src", "api"]
+  "include": ["src"]
 }
