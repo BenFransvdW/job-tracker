@@ -1,3 +1,5 @@
+const API_BASE = import.meta.env.VITE_API_URL ?? '';
+
 let getTokenFn: (() => string | null) | null = null;
 let refreshFn: (() => Promise<string | null>) | null = null;
 let logoutFn: (() => void) | null = null;
@@ -12,7 +14,8 @@ export function initApiClient(
     logoutFn = logout;
 }
 
-async function apiFetch(url: string, options: RequestInit = {}): Promise<Response> {
+async function apiFetch(path: string, options: RequestInit = {}): Promise<Response> {
+    const url = `${API_BASE}${path}`;
     const token = getTokenFn?.();
     const headers: Record<string, string> = {
         'Content-Type': 'application/json',
