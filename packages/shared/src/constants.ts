@@ -45,17 +45,22 @@ export const API_ROUTES = {
         login: '/auth/login',
         register: '/auth/register',
         refresh: '/auth/refresh',
+        logout: '/auth/logout',
         me: '/auth/me'
     },
     applications: {
         list: '/applications',
         detail: (id: string) => `/applications/${id}`,
-        status: (id: string) => `/applications/${id}/status`
-    }, 
+        status: (id: string) => `/applications/${id}/status`,
+        reorder: (id: string) => `/applications/${id}/reorder`,
+    },
     interviews: {
-        list: (appId: string) => `/applications/${appId}/interviews`
+        list: (appId: string) => `/applications/${appId}/interviews`,
+        detail: (appId: string, id: string) => `/applications/${appId}/interviews/${id}`,
     },
     stats: {
-        summary: '/stats/summary'
+        summary: '/stats/summary',
+        timeline: '/stats/timeline',
+        funnel: '/stats/funnel',
     }
 } as const

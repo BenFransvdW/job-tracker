@@ -68,7 +68,7 @@ export interface Application {
     nextFollowUpAt? : string,
     boardPosition : number,
     contacts : Contact[],
-    interviews : Interview[],
+    interviews : string[],
     createdAt : string,
     updatedAt : string
 }

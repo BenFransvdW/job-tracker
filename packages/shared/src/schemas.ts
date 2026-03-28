@@ -61,3 +61,16 @@ export const contactSchema = z.object({
     linkedin: z.string().url().optional(),
     notes: z.string().optional()
 })
+
+export const updateMeSchema = z.object({
+    name: z.string().min(1).max(80).optional(),
+    currentPassword: z.string().optional(),
+    newPassword: z.string().min(8).optional(),
+    preferences: z.object({
+        timezone: z.string().optional(),
+        defaultBoardView: z.enum(['board', 'list']).optional(),
+        emailReminders: z.boolean().optional(),
+        reminderDaysBefore: z.number().int().min(1).optional(),
+    }).optional()
+})
+export type UpdateMeInput = z.infer<typeof updateMeSchema>
