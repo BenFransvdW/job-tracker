@@ -18,7 +18,13 @@ function ApiClientInitializer({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const refresh = async (): Promise<string | null> => {
             try {
-                const data = await apiPost<{ accessToken: string }>('/api/auth/refresh');
+                const res = await fetch(`${import.meta.env.VITE_API_URL ?? ''}/api/auth/refresh`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+                if (!res.ok) return null;
+                const data = await res.json();
                 setAccessToken(data.accessToken);
                 return data.accessToken;
             } catch {

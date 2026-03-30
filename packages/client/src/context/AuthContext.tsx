@@ -26,7 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         // Try to restore session from httpOnly cookie
-        fetch('/api/auth/refresh', { method: 'POST', credentials: 'include' })
+        fetch(`${import.meta.env.VITE_API_URL ?? ''}/api/auth/refresh`, { method: 'POST', credentials: 'include' })
             .then(res => res.ok ? res.json() : null)
             .then(data => {
                 if (data?.accessToken) {

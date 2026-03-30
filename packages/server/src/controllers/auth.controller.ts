@@ -19,7 +19,7 @@ function setRefreshCookie(res: Response, token: string) {
     res.cookie(REFRESH_COOKIE_NAME, token, {
         httpOnly: true,
         secure: config.nodeEnv === 'production',
-        sameSite: 'lax',
+        sameSite: config.nodeEnv === 'production' ? 'none' : 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 }
