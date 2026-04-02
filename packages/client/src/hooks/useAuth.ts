@@ -3,6 +3,8 @@ import { useAuthContext } from '../context/AuthContext';
 import { apiPost } from '../api/client';
 import type { User } from '@job-tracker/shared';
 
+const API_BASE = import.meta.env.VITE_API_URL ?? '';
+
 export function useAuth() {
     const { user, accessToken, setAccessToken, setUser, isLoading } = useAuthContext();
 
@@ -15,7 +17,7 @@ export function useAuth() {
 
     const logout = useCallback(async () => {
         try {
-            await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+            await fetch(`${API_BASE}/api/auth/logout`, { method: 'POST', credentials: 'include' });
         } catch {}
         setAccessToken(null);
         setUser(null);

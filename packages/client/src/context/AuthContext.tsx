@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             .then(data => {
                 if (data?.accessToken) {
                     setAccessToken(data.accessToken);
-                    return fetch('/api/auth/me', {
+                    return fetch(`${import.meta.env.VITE_API_URL ?? ''}/api/auth/me`, {
                         headers: { Authorization: `Bearer ${data.accessToken}` },
                         credentials: 'include'
                     });
