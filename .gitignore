@@ -215,7 +215,6 @@ yarn-error.log*
 
 # docs
 *.docx
-*.txt
 
 # git worktrees
 .worktrees/
