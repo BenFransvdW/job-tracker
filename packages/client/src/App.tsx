@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useAuth } from './hooks/useAuth';
 import { useAuthContext } from './context/AuthContext';
 import { initApiClient } from './api/client';
-import { apiPost } from './api/client';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { BoardPage } from './pages/BoardPage';
